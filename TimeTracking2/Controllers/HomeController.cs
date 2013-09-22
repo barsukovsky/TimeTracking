@@ -7,7 +7,7 @@ using TimeTracking2.Filters;
 
 namespace TimeTracking2.Controllers
 {
-    //[InitializeSimpleMembership]
+    [InitializeSimpleMembership]
     public class HomeController : Controller
     {
         public ActionResult Index()

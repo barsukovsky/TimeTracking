@@ -40,7 +40,7 @@ namespace TimeTracking2.Migrations
                     new
                     {
                         FirstName = "Админ",
-                        LastName = "Секретный"
+                        LastName = "Вселенский"
                     });
             }
             if (!Roles.GetRolesForUser("admin").Contains("Administrator"))
@@ -56,7 +56,7 @@ namespace TimeTracking2.Migrations
                         MiddleName = "Кузьмич",
                         LastName = "Первый",
                         Appointment = "Водитель",
-                        CurrentHourlyRate = "300"
+                        CurrentHourlyRate = "30"
                     });
             }
             if (!WebSecurity.UserExists("user2"))
@@ -68,7 +68,7 @@ namespace TimeTracking2.Migrations
                         MiddleName = "Петрович",
                         LastName = "Второй",
                         Appointment = "Слесарь",
-                        CurrentHourlyRate = "250"
+                        CurrentHourlyRate = "25"
                     });
             }
             if (!WebSecurity.UserExists("user3"))
@@ -80,7 +80,7 @@ namespace TimeTracking2.Migrations
                         MiddleName = "Михалыч",
                         LastName = "Третий",
                         Appointment = "Механик",
-                        CurrentHourlyRate = "350"
+                        CurrentHourlyRate = "35"
                     });
             }
 
@@ -104,7 +104,7 @@ namespace TimeTracking2.Migrations
                         Month = date.Month,
                         UserId = ids[j],
                         Hours = rnd.Next(50, 160),
-                        HourlyRate = rnd.Next(200,400)
+                        HourlyRate = rnd.Next(1, 30)
                     });
                 }
                 date = date.AddMonths(1);

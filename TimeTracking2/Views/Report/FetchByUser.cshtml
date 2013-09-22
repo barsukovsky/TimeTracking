@@ -8,21 +8,31 @@
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
-<h4>
-    @if(User.IsInRole("Administrator"))
-    {
+
+@if(User.IsInRole("Administrator"))
+{
+    <h4>
         @Html.ActionLink(Model.UserProfile.LastName + " " + Model.UserProfile.FirstName + " " + Model.UserProfile.MiddleName ?? "",
-        "Edit", "Account", new { username = Model.UserProfile.UserName }, new { title = "Перейти к профилю" })
-    }
-    else
-    {
-        @: @Model.UserProfile.LastName @Model.UserProfile.FirstName @Model.UserProfile.MiddleName
-    }
-    @if(Model.UserProfile.Appointment != null && Model.UserProfile.Appointment != "")
-    {
-        @:(@Model.UserProfile.Appointment)
-    }
-</h4>
+            "Edit", "Account", new { username = Model.UserProfile.UserName }, new { title = "Перейти к профилю" })
+        @if(Model.UserProfile.Appointment != null && Model.UserProfile.Appointment != "")
+        {
+            @:(@Model.UserProfile.Appointment)
+        }
+    </h4>
+    @Html.ActionLink("Добавить отчет", "CreateForUser", "Report", new { username = Model.UserProfile.UserName }, null)
+}
+else
+{
+    <h4>
+        @Model.UserProfile.LastName @Model.UserProfile.FirstName @Model.UserProfile.MiddleName
+        @if(Model.UserProfile.Appointment != null && Model.UserProfile.Appointment != "")
+        {
+            @:(@Model.UserProfile.Appointment)
+        }
+    </h4>
+}
+    
+
 
 <table>
     <tr>

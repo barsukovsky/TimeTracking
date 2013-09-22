@@ -18,7 +18,7 @@
         <ol>
             <li>
                 @Html.LabelFor(x => x.UserName)
-                @Html.TextBoxFor(x => x.UserName)
+                @Html.TextBoxFor(x => x.UserName, new { @readonly = "readonly" })
                 @Html.ValidationMessageFor(x => x.UserName)
             </li>
             <li>

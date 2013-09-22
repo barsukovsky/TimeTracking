@@ -227,7 +227,7 @@ namespace TimeTracking2.Controllers
             }
             var user = context.UserProfiles.Find(userId);
 
-            return View("Edit", new Report
+            return View("Create", new Report
             {
                 Year = DateTime.Now.Year,
                 Month = DateTime.Now.Month,
@@ -248,7 +248,7 @@ namespace TimeTracking2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Edit", model);
+                return View("Create", model);
             }
 
             model.UserProfile = context.UserProfiles.Find(model.UserId);
@@ -266,7 +266,7 @@ namespace TimeTracking2.Controllers
             if (model.UserProfile.CurrentHourlyRate == null || model.UserProfile.CurrentHourlyRate.Value == 0)
             {
                 ModelState.AddModelError("", "Сотрудник сейчас не нанят; свяжитесь с администратором");
-                return View("Edit", model);
+                return View("Create", model);
             }
 
             var report = context.Reports.Find(model.UserId, model.Year, model.Month);
@@ -275,7 +275,7 @@ namespace TimeTracking2.Controllers
                 ModelState.AddModelError("", "Отчет за " +
                     new DateTime(model.Year, model.Month, 1).ToString("MMMM").ToLower() + " " +
                     model.Year.ToString() + " года уже существует");
-                return View("Edit", model);
+                return View("Create", model);
             }
 
             context.Reports.Add(report = new Report

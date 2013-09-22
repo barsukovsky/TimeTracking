@@ -247,7 +247,6 @@ namespace TimeTracking2.Controllers
                 return new HttpNotFoundResult();
             }
 
-            user.UserName = model.UserName;
             user.FirstName = model.FirstName;
             user.MiddleName = model.MiddleName;
             user.LastName = model.LastName;

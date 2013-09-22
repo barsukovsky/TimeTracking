@@ -1,7 +1,7 @@
 ﻿@model TimeTracking2.Models.Report
 
 @{
-    ViewBag.Title = "Редактирование отчета";
+    ViewBag.Title = "Новый отчет";
 }
 
 <hgroup class="title">
@@ -35,12 +35,12 @@
         <ol>
             <li>
                 @Html.LabelFor(m => m.Year)
-                @Html.TextBoxFor(m => m.Year, new { @readonly = "readonly"} )
+                @Html.TextBoxFor(m => m.Year)
                 @Html.ValidationMessageFor(x => x.Year)
             </li>
             <li>
                 @Html.LabelFor(x => x.Month)
-                @Html.TextBoxFor(x => x.Month, new { @readonly = "readonly"} )
+                @Html.TextBoxFor(x => x.Month)
                 @Html.ValidationMessageFor(x => x.Month)
             </li>
             <li>

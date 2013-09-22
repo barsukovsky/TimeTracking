@@ -26,7 +26,10 @@
                                 {
                                     <li>@Html.ActionLink("Новый отчет", "Create", "Report")</li>
                                     <li>@Html.ActionLink("Статистика", "Index", "Report")</li>
-                                    <li>@Html.ActionLink("Сотрудники", "Index", "Account")</li>
+                                    if (User.IsInRole("Administrator"))
+                                    {
+                                        <li>@Html.ActionLink("Сотрудники", "Index", "Account")</li>
+                                    }
                                 }   
                             }
                             <li>@Html.ActionLink("О приложении", "Index", "Home")</li>
