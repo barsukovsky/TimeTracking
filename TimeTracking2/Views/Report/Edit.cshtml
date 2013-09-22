@@ -1,0 +1,59 @@
+﻿@model TimeTracking2.Models.Report
+
+@{
+    ViewBag.Title = "Редактирование отчета";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<h4>
+    @if(User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink(Model.UserProfile.LastName + " " + Model.UserProfile.FirstName + " " + Model.UserProfile.MiddleName ?? "",
+        "Edit", "Account", new { username = Model.UserProfile.UserName }, new { title = "Перейти к профилю" })
+    }
+    else
+    {
+        @: @Model.UserProfile.LastName @Model.UserProfile.FirstName @Model.UserProfile.MiddleName
+    }
+    @if(Model.UserProfile.Appointment != null && Model.UserProfile.Appointment != "")
+    {
+        @:(@Model.UserProfile.Appointment)
+    }
+</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.UserId)
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Форма редактирования отчета</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Year)
+                @Html.TextBoxFor(m => m.Year)
+                @Html.ValidationMessageFor(x => x.Year)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.Month)
+                @Html.TextBoxFor(x => x.Month)
+                @Html.ValidationMessageFor(x => x.Month)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.Hours)
+                @Html.TextBoxFor(x => x.Hours)
+                @Html.ValidationMessageFor(x => x.Hours)
+            </li>
+            
+        </ol>
+        <input type="submit" value="Сохранить" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

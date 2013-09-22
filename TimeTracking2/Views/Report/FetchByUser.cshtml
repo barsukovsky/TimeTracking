@@ -1,0 +1,73 @@
+﻿@model TimeTracking2.Models.ReportsOfUserViewModel
+
+@{
+    ViewBag.Title = "Отчеты";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<h4>
+    @if(User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink(Model.UserProfile.LastName + " " + Model.UserProfile.FirstName + " " + Model.UserProfile.MiddleName ?? "",
+        "Edit", "Account", new { username = Model.UserProfile.UserName }, new { title = "Перейти к профилю" })
+    }
+    else
+    {
+        @: @Model.UserProfile.LastName @Model.UserProfile.FirstName @Model.UserProfile.MiddleName
+    }
+    @if(Model.UserProfile.Appointment != null && Model.UserProfile.Appointment != "")
+    {
+        @:(@Model.UserProfile.Appointment)
+    }
+</h4>
+
+<table>
+    <tr>
+        <th>Год</th>
+        <th>Месяц</th>
+        <th>Ставка</th>
+        <th>Часов</th>
+        <th>Сумма</th>
+    </tr>
+    @foreach (var i in Model.Reports)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(i.Year.ToString(), "FetchByYearAndUser", "Report",
+                    new { year = i.Year, username = Model.UserProfile.UserName },
+                    new { title = "Перейти к отчетам " + i.UserProfile.UserName + " за " + i.Year + " год" })
+            </td>
+            <td>
+                @Html.ActionLink(new DateTime(i.Year, i.Month, 1).ToString("MMMM"),
+                    "FetchByMonthAndUser", "Report", new { month = i.Month, username = i.UserProfile.UserName },
+                    new { title = "Перейти к отчетам " + i.UserProfile.UserName + " только за " + new DateTime(i.Year, i.Month, 1).ToString("MMMM").ToLower() })
+            </td>
+            <td>
+                @i.HourlyRate.ToString("c")
+            </td>
+            <td>
+                @i.Hours
+            </td>
+            <td>
+                @((i.HourlyRate * @i.Hours).ToString("c"))
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { year = i.Year, month = i.Month, username = Model.UserProfile.UserName }, null)
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "Report", FormMethod.Post, new { id = Model.UserProfile.UserName + i.Year + i.Month }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("UserId", Model.UserProfile.UserId)
+                    @Html.Hidden("Year", i.Year)
+                    @Html.Hidden("Month", i.Month)
+                    <a href="javascript:document.getElementById('@(Model.UserProfile.UserName + i.Year + i.Month)').submit()">Удалить</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+

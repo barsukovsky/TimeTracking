@@ -1,0 +1,61 @@
+﻿@model System.Linq.IQueryable<TimeTracking2.Models.Report>
+
+@{
+    ViewBag.Title = "Статистика";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<table>
+    <tr>
+        <th>Фамилия, Имя, Отчество</th>
+        <th>Год</th>
+        <th>Месяц</th>
+        <th>Ставка</th>
+        <th>Часов</th>
+        <th>Сумма</th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(i.UserProfile.LastName + " " + i.UserProfile.FirstName + " " + i.UserProfile.MiddleName,
+                    "FetchByUser", "Report", new { username = i.UserProfile.UserName },
+                    new { title = "Перейти к отчетам " + i.UserProfile.UserName })
+            </td>
+            <td>
+                @Html.ActionLink(i.Year.ToString(), "FetchByYear", "Report", new { year = i.Year },
+                    new { title = "Перейти к отчетам за " + i.Year + " год" })
+            </td>
+            <td>
+                @Html.ActionLink(new DateTime(i.Year, i.Month, 1).ToString("MMMM"),
+                    "FetchByMonth", "Report", new { month = i.Month },
+                   new { title = "Перейти к отчетам только за " + new DateTime(i.Year, i.Month, 1).ToString("MMMM").ToLower() })
+            </td>
+            <td>
+                @i.HourlyRate.ToString("c")
+            </td>
+            <td>
+                @i.Hours
+            </td>
+            <td>
+                @((i.HourlyRate * @i.Hours).ToString("c"))
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { year = i.Year, month = i.Month, username = i.UserProfile.UserName }, null)
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "Report", FormMethod.Post, new { id = i.UserProfile.UserName + i.Year + i.Month }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("UserId", i.UserProfile.UserId)
+                    @Html.Hidden("Year", i.Year)
+                    @Html.Hidden("Month", i.Month)
+                    <a href="javascript:document.getElementById('@(i.UserProfile.UserName + i.Year + i.Month)').submit()">Удалить</a>
+                }
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,31 @@
+﻿@model TimeTracking2.Models.UserProfile
+
+<tr>
+    <td>
+        @Html.ActionLink(Model.LastName + " " + Model.FirstName + " " + Model.MiddleName ?? "",
+            "Edit", "Account", new { username = Model.UserName }, new { title = "Перейти к профилю " + Model.UserName })
+    </td>
+    <td>
+        @Model.Appointment
+    </td>
+    <td>
+        @(Model.CurrentHourlyRate != null ? Model.CurrentHourlyRate.Value.ToString("c") : 0.ToString("c"))
+    </td>
+    <td>
+        @Html.ActionLink("Отчеты", "FetchByUser", "Report",
+            new { username = Model.UserName }, new { title = "Перейти к отчетам " + Model.UserName })
+    </td>
+    <td>
+        @{
+            if (User.Identity.Name != Model.UserName)
+            {
+                using (Html.BeginForm("Delete", "Account", FormMethod.Post, new { id = "delete_" + Model.UserName }))
+                {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("UserId", Model.UserId)
+            <a href="javascript:document.getElementById('delete_@(Model.UserName)').submit()">Удалить</a>
+                }
+            }
+        }
+    </td>
+</tr>

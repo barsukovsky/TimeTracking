@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TimeTracking2.Models.UserProfile>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<table>
+    <tr>
+        <th>Фамилия, Имя, Отчество</th>
+        <th>Должность</th>
+        <th>Ставка</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        Html.RenderPartial("UserSummaryPartial", user);
+    }
+</table>

@@ -1,0 +1,62 @@
+﻿@model TimeTracking2.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Выполнить вход";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<section id="loginForm">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Форма логина</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(x => x.UserName)
+                @Html.TextBoxFor(x => x.UserName)
+                @Html.ValidationMessageFor(x => x.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.Password)
+                @Html.PasswordFor(x => x.Password)
+                @Html.ValidationMessageFor(x => x.Password)
+            </li>
+            <li>
+                @Html.CheckBoxFor(x => x.RememberMe)
+                @Html.LabelFor(x => x.RememberMe, new { @class = "checkbox" })
+            </li>
+        </ol>
+        <input type="submit" value="Войти" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Зарегистрируйтесь", "Register", "Account"), если у вас нет учетной записи.
+    </p>
+}
+</section>
+
+<section id="socialLoginForm">
+    <p>Администратор:</p>
+    <ul>
+        <li>Логин: <b>admin</b></li>
+        <li>Пароль: <b>secret</b></li>
+    </ul>
+    <p>Сотрудник 1:</p>
+    <ul>
+        <li>Логин: <b>user1</b></li>
+        <li>Пароль: <b>user1</b></li>
+    </ul>
+    <p>Сотрудник 2:</p>
+    <ul>
+        <li>Логин: <b>user2</b></li>
+        <li>Пароль: <b>user2</b></li>
+    </ul>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

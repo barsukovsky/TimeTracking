@@ -1,0 +1,57 @@
+﻿@model TimeTracking2.Models.UserProfile
+
+@{
+    ViewBag.Title = "Редактирование профиля";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Hidden("UserId", Model.UserId)
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Форма редактирования</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(x => x.UserName)
+                @Html.TextBoxFor(x => x.UserName)
+                @Html.ValidationMessageFor(x => x.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.LastName)
+                @Html.TextBoxFor(x => x.LastName)
+                @Html.ValidationMessageFor(x => x.LastName)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.FirstName)
+                @Html.TextBoxFor(x => x.FirstName)
+                @Html.ValidationMessageFor(x => x.FirstName)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.MiddleName)
+                @Html.TextBoxFor(x => x.MiddleName)
+                @Html.ValidationMessageFor(x => x.MiddleName)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.Appointment)
+                @Html.TextBoxFor(x => x.Appointment)
+                @Html.ValidationMessageFor(x => x.Appointment)
+            </li>
+            <li>
+                @Html.LabelFor(x => x.CurrentHourlyRate)
+                @Html.TextBoxFor(x => x.CurrentHourlyRate)
+                @Html.ValidationMessageFor(x => x.CurrentHourlyRate)
+            </li>
+        </ol>
+
+        <input type="submit" value="Сохранить" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
