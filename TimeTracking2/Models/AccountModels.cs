@@ -5,6 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeTracking2.Models
 {
+
+    /// <summary>
+    /// Представляет профиль сотрудника
+    /// </summary>
     [Table("UserProfiles")]
     public class UserProfile
     {
@@ -44,6 +48,9 @@ namespace TimeTracking2.Models
         public virtual ICollection<Report> Reports { get; set; }
     }
 
+    /// <summary>
+    /// Используется при регистрации нового пользователя
+    /// </summary>
     public class RegisterViewModel
     {
         public UserProfile UserProfile { get; set; }
@@ -60,6 +67,9 @@ namespace TimeTracking2.Models
         public string ConfirmPassword { get; set; }
     }
 
+    /// <summary>
+    /// Используется при смене пароля пользователя
+    /// </summary>
     public class PasswordViewModel
     {
         [Required]
@@ -79,6 +89,10 @@ namespace TimeTracking2.Models
         public string ConfirmPassword { get; set; }
     }
 
+
+    /// <summary>
+    /// Используется при аутентификации пользователя
+    /// </summary>
     public class LoginViewModel
     {
         [Required]

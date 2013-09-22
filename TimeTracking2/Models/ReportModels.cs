@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeTracking2.Models
 {
+    /// <summary>
+    /// Представляет отчет сотрудника за конкретные месяц и год
+    /// </summary>
     [Table("Reports")]
     public class Report
     {
@@ -41,6 +44,9 @@ namespace TimeTracking2.Models
         public int Hours { get; set; }
     }
 
+    /// <summary>
+    /// Представляет набор отчетов конкретного сотрудника
+    /// </summary>
     public class ReportsOfUserViewModel
     {
         public UserProfile UserProfile { get; set; }

@@ -17,6 +17,11 @@ namespace TimeTracking2.Controllers
     {
         private EFDbContext context = new EFDbContext();
 
+        /// <summary>
+        /// Возвращает список отчетов для всех сотрудников, если пользователь входит в группу Administrator,
+        /// иначе - список отчетов только для него самого
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             if (!User.IsInRole("Administrator"))
@@ -35,6 +40,11 @@ namespace TimeTracking2.Controllers
             return View(reports);
         }
 
+        /// <summary>
+        /// Выборка отчетов определенного сотрудника
+        /// </summary>
+        /// <param name="userName">Логин сотрудника</param>
+        /// <returns></returns>
         public ActionResult FetchByUser(string userName)
         {
             if (User.Identity.Name != userName && !User.IsInRole("Administrator"))
@@ -58,6 +68,11 @@ namespace TimeTracking2.Controllers
             });
         }
 
+        /// <summary>
+        /// Выборка за определенный год
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public ActionResult FetchByYear(int year)
         {
             if (!User.IsInRole("Administrator"))
@@ -77,6 +92,11 @@ namespace TimeTracking2.Controllers
             return View("Index", reports);
         }
 
+        /// <summary>
+        /// Выборка за конкретный месяц
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public ActionResult FetchByMonth(int month)
         {
             if (!User.IsInRole("Administrator"))
@@ -96,6 +116,12 @@ namespace TimeTracking2.Controllers
             return View("Index", reports);
         }
 
+        /// <summary>
+        /// Выборка отчетов сотрудника за определенный год
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public ActionResult FetchByYearAndUser(int year, string userName)
         {
             if (User.Identity.Name != userName && !User.IsInRole("Administrator"))
@@ -118,6 +144,12 @@ namespace TimeTracking2.Controllers
             });
         }
 
+        /// <summary>
+        /// Выборка отчетов сотрудника только за определенный месяц
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public ActionResult FetchByMonthAndUser(int month, string userName)
         {
             if (User.Identity.Name != userName && !User.IsInRole("Administrator"))
@@ -140,6 +172,12 @@ namespace TimeTracking2.Controllers
             });
         }
 
+        /// <summary>
+        /// Выборка отчетов за определенные год и месяц
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public ActionResult FetchByYearAndMonth(int year, int month)
         {
             if (!User.IsInRole("Administrator"))
@@ -158,6 +196,10 @@ namespace TimeTracking2.Controllers
             return View("Index", reports);
         }
 
+        /// <summary>
+        /// Возвращает форму добавления нового отчета для аутентифицированного пользователя
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return RedirectToAction("CreateForUser", new
@@ -166,6 +208,11 @@ namespace TimeTracking2.Controllers
             });
         }
 
+        /// <summary>
+        /// Возвращает форму добавления нового отчета для выбранного сотрудника
+        /// </summary>
+        /// <param name="userName">Логин сотрудника</param>
+        /// <returns></returns>
         public ActionResult CreateForUser(string userName)
         {
             if (User.Identity.Name != userName && !User.IsInRole("Administrator"))
@@ -190,6 +237,11 @@ namespace TimeTracking2.Controllers
             });
         }
 
+        /// <summary>
+        /// Создает новый отчет в БД на основе данных модели
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateForUser(Report model)
@@ -239,6 +291,14 @@ namespace TimeTracking2.Controllers
             return RedirectToAction("Index");
         }
 
+
+        /// <summary>
+        /// Возвращает форму редактирования отчета
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <param name="userName">Логин сотрудника</param>
+        /// <returns></returns>
         public ActionResult Edit(int year, int month, string userName)
         {
             if (User.Identity.Name != userName && !User.IsInRole("Administrator"))
@@ -265,6 +325,11 @@ namespace TimeTracking2.Controllers
             return View(report);
         }
 
+        /// <summary>
+        /// Обновляет отчет в БД
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Report model)
@@ -292,6 +357,11 @@ namespace TimeTracking2.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Удаляет отчет
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Report model)

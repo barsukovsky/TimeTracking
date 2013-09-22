@@ -6,6 +6,9 @@ using System.Data.Entity;
 
 namespace TimeTracking2.Models
 {
+    /// <summary>
+    /// Даёт возможность выполнять запросы к БД
+    /// </summary>
     public class EFDbContext : DbContext
     {
         public EFDbContext() : base("EFDbContext") { }

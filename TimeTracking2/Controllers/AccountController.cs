@@ -17,6 +17,11 @@ namespace TimeTracking2.Controllers
     {
         private EFDbContext context = new EFDbContext();
 
+        /// <summary>
+        /// Возвращает форму входа
+        /// </summary>
+        /// <param name="returnUrl">Локальный url, переадресация на который будет осуществлена после входа</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
@@ -24,6 +29,12 @@ namespace TimeTracking2.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Производит попытку аутентификации пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl">Локальный url, переадресация на который будет осуществлена после входа</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -37,6 +48,11 @@ namespace TimeTracking2.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Выполняет выход пользователя из системы
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -45,12 +61,22 @@ namespace TimeTracking2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        /// <summary>
+        /// Возвращает форму регистрации нового пользователя
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ViewResult Register()
         {
             return View();
         }
 
+        /// <summary>
+        /// Производит попытку создания новой учетной записи пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -81,11 +107,22 @@ namespace TimeTracking2.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Возвращает форму изменения пароля пользователя
+        /// </summary>
+        /// <returns></returns>
         public ViewResult ChangePassword()
         {
             return View();
         }
 
+
+        /// <summary>
+        /// Изменяет пароль пользователя на новый
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(PasswordViewModel model)
@@ -112,6 +149,10 @@ namespace TimeTracking2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Возвращает список всех пользователей
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             if (!User.IsInRole("Administrator"))
@@ -126,6 +167,11 @@ namespace TimeTracking2.Controllers
             return View(users);
         }
 
+        /// <summary>
+        /// Удаляет профиль пользователя из БД
+        /// </summary>
+        /// <param name="userId">Id удаляемого пользователя</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int userId)
@@ -152,6 +198,11 @@ namespace TimeTracking2.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Возвращает форму редактирования профиля пользователя
+        /// </summary>
+        /// <param name="userName">Логин пользователя</param>
+        /// <returns></returns>
         public ActionResult Edit(string userName)
         {
             if (!User.IsInRole("Administrator"))
@@ -170,6 +221,11 @@ namespace TimeTracking2.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// Обновляет профиль пользователя в БД так, чтобы он соответствовал переданной модели  
+        /// </summary>
+        /// <param name="model">Профиль пользователя, подлежащий изменению</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserProfile model)
